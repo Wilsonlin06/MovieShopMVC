@@ -1,8 +1,25 @@
-﻿@{
+﻿@model List<ApplicationCore.Models.MovieCardResponseModel>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1>
+    @ViewBag.PageTitle
+</h1>
+
+<h3>
+    Total Top Movies: @ViewData["TotalMovies"]
+</h3>
+
+<div>
+    <ul>
+        @foreach (var movie in Model)
+        {
+            <li>
+                @movie.Id <br />
+                @movie.Title <br />
+            </li>
+         }
+    </ul>
 </div>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Infrastructure.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MovieShopMVC.Models;
 using System;
@@ -11,16 +12,27 @@ namespace MovieShopMVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private MovieService _movieService;
 
         public HomeController(ILogger<HomeController> logger)
         {
-            _logger = logger;
+            _movieService = new MovieService();
         }
 
         public IActionResult Index()
         {
-            return View();
+            var movies = _movieService.GetTopRevenueMovies();
+            // 3 ways to pass data from controller to view
+            // 1 Strongly Typed Models ******
+            // 2 ViewBag
+            // 3 ViewData
+            // get top revenue movie and display on the view
+            // localhost:5001/movies/details/2
+
+            ViewBag.PageTitle = "Top Revenue Movies";
+            ViewData["TotalMovies"] = movies.Count();
+
+            return View(movies);
         }
 
         // Clean Architecture
@@ -55,6 +67,7 @@ namespace MovieShopMVC.Controllers
         // DTO (Data Transfer Objects) => API
         public IActionResult Privacy()
         {
+            // get top revenue movie and display on the view
             return View();
         }
 

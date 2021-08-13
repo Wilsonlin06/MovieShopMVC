@@ -6,7 +6,8 @@
 
   <ItemGroup>
     <Folder Include="Entities\" />
-    <Folder Include="Models\" />
+    <Folder Include="Exception\" />
+    <Folder Include="RepositoryInterfaces\" />
   </ItemGroup>
 
 </Project>

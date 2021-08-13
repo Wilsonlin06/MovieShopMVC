@@ -38,3 +38,7 @@ E:\MovieShopMVC\MovieShop\MovieShopMVC\obj\Debug\net5.0\ref\MovieShopMVC.dll
 E:\MovieShopMVC\MovieShop\MovieShopMVC\obj\Debug\net5.0\MovieShopMVC.pdb
 E:\MovieShopMVC\MovieShop\MovieShopMVC\obj\Debug\net5.0\MovieShopMVC.genruntimeconfig.cache
 E:\MovieShopMVC\MovieShop\MovieShopMVC\obj\Debug\net5.0\MovieShopMVC.csproj.CopyComplete
+E:\MovieShopMVC\MovieShop\MovieShopMVC\bin\Debug\net5.0\ApplicationCore.dll
+E:\MovieShopMVC\MovieShop\MovieShopMVC\bin\Debug\net5.0\Infrastructure.dll
+E:\MovieShopMVC\MovieShop\MovieShopMVC\bin\Debug\net5.0\ApplicationCore.pdb
+E:\MovieShopMVC\MovieShop\MovieShopMVC\bin\Debug\net5.0\Infrastructure.pdb
