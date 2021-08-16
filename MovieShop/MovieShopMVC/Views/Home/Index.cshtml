@@ -4,22 +4,12 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h1>
-    @ViewBag.PageTitle
-</h1>
-
-<h3>
-    Total Top Movies: @ViewData["TotalMovies"]
-</h3>
-
 <div>
     <ul>
         @foreach (var movie in Model)
         {
-            <li>
-                @movie.Id <br />
-                @movie.Title <br />
-            </li>
-         }
+            @await Html.PartialAsync("_MovieCard", movie)
+        }
     </ul>
 </div>
+

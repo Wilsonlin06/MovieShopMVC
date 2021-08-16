@@ -20,20 +20,10 @@ namespace MovieShopMVC.Controllers
             _movieService = movieService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var movies = _movieService.GetTopRevenueMovies();
-            // 3 ways to pass data from controller to view
-            // 1 Strongly Typed Models ******
-            // 2 ViewBag
-            // 3 ViewData
-            // get top revenue movie and display on the view
-            // localhost:5001/movies/details/2
-
-            ViewBag.PageTitle = "Top Revenue Movies";
-            ViewData["TotalMovies"] = movies.Count();
-
-            return View(movies);
+            var movieCards = await _movieService.GetTopRevenueMovies();
+            return View(movieCards);
         }
 
         // Clean Architecture
