@@ -24,7 +24,31 @@ namespace Infrastructure.Services
 
         public async Task<UserLoginResponseModel> Login(LoginRequestModel model)
         {
-            throw new NotImplementedException();
+            var dbUser = await _userRepository.GetUserByEmail(model.Email);
+            if (dbUser == null)
+            {
+                return null;
+            }
+
+            // get the hashed password and salt from database
+
+            var hashedPassword = GetHashedPassword(model.Password, dbUser.Salt);
+
+            if (hashedPassword == dbUser.HashedPassword)
+            {
+                // success 
+                var userLoginResponseModel = new UserLoginResponseModel
+                {
+                     Id = dbUser.Id,
+                     FirstName = dbUser.FirstName,
+                     LastName = dbUser.LastName,
+                      Email = dbUser.Email
+                };
+
+                return userLoginResponseModel;
+            }
+
+            return null;
         }
 
         public async Task<UserRegisterResponseModel> RegisterUser(UserRegisterRequestModel model)
@@ -33,7 +57,7 @@ namespace Infrastructure.Services
 
             var dbUser = await _userRepository.GetUserByEmail(model.Email);
 
-            if (dbUser !=null)
+            if (dbUser != null)
             {
                 // user already has email
                 throw new ConflictException("Email already exists");
@@ -50,23 +74,23 @@ namespace Infrastructure.Services
             // save the salt and hashed password to the database.
 
             // create User entity object
-            var user = new User 
-            { 
-                 Email = model.Email,
-                 FirstName = model.FirstName,
-                 LastName = model.LastName,
-                 Salt = salt,
-                 HashedPassword = hashedPassword
+            var user = new User
+            {
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Salt = salt,
+                HashedPassword = hashedPassword
             };
 
             var createdUser = await _userRepository.AddAsync(user);
 
             var userRegisterResponseModel = new UserRegisterResponseModel
             {
-                 Id = createdUser.Id,
-                  Email = createdUser.Email,
-                  FirstName = createdUser.FirstName,
-                  LastName = createdUser.LastName
+                Id = createdUser.Id,
+                Email = createdUser.Email,
+                FirstName = createdUser.FirstName,
+                LastName = createdUser.LastName
             };
 
             return userRegisterResponseModel;

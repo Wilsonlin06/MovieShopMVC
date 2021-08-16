@@ -24,9 +24,23 @@ namespace MovieShopMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginRequestModel model)
+        public async Task<IActionResult>  Login(LoginRequestModel model)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var user = await _userService.Login(model);
+
+            if (user == null)
+            {
+                throw new Exception("Invalid Login");
+            }
+
+            // Cookies based authentication....
+            return LocalRedirect("~/");
+            
         }
 
         [HttpGet]

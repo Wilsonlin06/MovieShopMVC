@@ -16,6 +16,40 @@ namespace Infrastructure.Services
         {
             _movieRepository = movieRepository;
         }
+
+        public async Task<MovieDetailsResponseModel> GetMovieDetails(int id)
+        {
+            var movie = await _movieRepository.GetByIdAsync(id);
+
+            var movieDetailsModel = new MovieDetailsResponseModel
+            {
+                Id = movie.Id,
+                Title = movie.Title,
+                Rating = movie.Rating
+            };
+
+            movieDetailsModel.Casts = new List<CastResponseModel>();
+
+            foreach (var cast in movie.MovieCasts)
+            {
+                movieDetailsModel.Casts.Add(new CastResponseModel
+                {
+                    Id = cast.CastId,
+                    Name = cast.Cast.Name,
+                    Character = cast.Character
+                });
+            }
+
+            movieDetailsModel.Genres = new List<GenreResponseModel>();
+
+            foreach (var genre in movie.Genres)
+            {
+                movieDetailsModel.Genres.Add(new GenreResponseModel { Id = genre.Id, Name = genre.Name });
+            }
+
+            return movieDetailsModel;
+        }
+
         public async Task<List<MovieCardResponseModel>> GetTopRevenueMovies()
         {
             // call repositories and get the real data from database
