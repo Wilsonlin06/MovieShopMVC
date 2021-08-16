@@ -4,11 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ApplicationCore.Models;
+using ApplicationCore.ServiceInterfaces;
 
 namespace MovieShopMVC.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly IUserService _userService;
+
+        public AccountController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
         [HttpGet]
         public IActionResult Login()
         {
@@ -28,9 +36,17 @@ namespace MovieShopMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(UserRegisterRequestModel model)
+        public async Task<IActionResult> Register(UserRegisterRequestModel model)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            // call the service and repository to hash the password with salt and save to DB
+
+            var regisetredUser = await _userService.RegisterUser(model);
+            return RedirectToAction("Login");
+           
         }
     }
 }
