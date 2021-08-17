@@ -17,7 +17,7 @@ namespace Infrastructure.Services
             _movieRepository = movieRepository;
         }
 
-        public async Task<MovieDetailsResponseModel> GetMovieDetails(int id)
+        public async Task<List<MovieDetailsResponseModel>> GetMovieDetails(int id)
         {
             var movie = await _movieRepository.GetByIdAsync(id);
 
@@ -62,8 +62,27 @@ namespace Infrastructure.Services
                     Name = genre.Name                    
                 });
             }
+            var movieDetails = new List<MovieDetailsResponseModel>();
+            movieDetails.Add(new MovieDetailsResponseModel
+            {
+                Id = movieDetailsModel.Id,
+                Title = movieDetailsModel.Title,
+                Overview = movieDetailsModel.Overview,
+                Tagline = movieDetailsModel.Tagline,
+                Budget = movieDetailsModel.Budget,
+                Revenue = movieDetailsModel.Revenue,
+                ImdbUrl = movieDetailsModel.ImdbUrl,
+                TmdbUrl = movieDetailsModel.TmdbUrl,
+                PosterUrl = movieDetailsModel.PosterUrl,
+                BackdropUrl = movieDetailsModel.BackdropUrl,
+                OriginalLanguage = movieDetailsModel.OriginalLanguage,
+                ReleaseDate = movieDetailsModel.ReleaseDate,
+                RunTime = movieDetailsModel.RunTime,
+                Price = movieDetailsModel.Price,
+                Rating = movieDetailsModel.Rating
+            });
 
-            return movieDetailsModel;
+            return movieDetails;
         }
 
         public async Task<List<MovieCardResponseModel>> GetTopRevenueMovies()

@@ -36,13 +36,12 @@
 <div class="rounded">
     <div class="container-fluid bg-light">
         <div class="row">
-            <img src=@Model[0].BackdropUrl />;
-            @*@foreach (var details in Model)
+            @foreach (var details in Model)
             {
                 <div class="col-6 col-lg-3 col-sm-4 col-xl-2">
-                    @await Html.PartialAsync("Poster", details.BackdropUrl);
+                    <img src= @details.PosterUrl />
                 </div>
-            }*@
+            }
         </div>
     </div>
 </div>
