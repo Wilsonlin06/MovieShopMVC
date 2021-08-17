@@ -32,6 +32,10 @@ namespace Infrastructure.Data
         public DbSet<Cast> Casts { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<Crew> Crews { get; set; }
+        public DbSet<Favorite> Favorites { get; set; }
+        public DbSet<Role> Roles { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -111,14 +115,14 @@ namespace Infrastructure.Data
             builder.HasKey(u => new { u.Id });
             builder.Property(u => u.FirstName).HasMaxLength(128);
             builder.Property(u => u.LastName).HasMaxLength(128);
-            builder.Property(u => u.DateOfBirth).HasDefaultValueSql("getdate()");
+            builder.Property(u => u.DateOfBirth).HasMaxLength(7);
             builder.Property(u => u.Email).HasMaxLength(256);
             builder.Property(u => u.HashedPassword).HasMaxLength(1024);
             builder.Property(u => u.Salt).HasMaxLength(1024);
             builder.Property(u => u.PhoneNumber).HasMaxLength(16);
             builder.Property(u => u.TwoFactorEnabled);
-            builder.Property(u => u.LockoutEndDate).HasDefaultValueSql("getdate()");
-            builder.Property(u => u.LastLoginDateTime).HasDefaultValueSql("getdate()");
+            builder.Property(u => u.LockoutEndDate).HasMaxLength(7);
+            builder.Property(u => u.LastLoginDateTime).HasMaxLength(7);
             builder.Property(u => u.IsLocked);
             builder.Property(u => u.AccessFailedCount);
         }

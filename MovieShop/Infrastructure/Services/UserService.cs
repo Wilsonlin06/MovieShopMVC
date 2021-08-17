@@ -42,7 +42,7 @@ namespace Infrastructure.Services
                      Id = dbUser.Id,
                      FirstName = dbUser.FirstName,
                      LastName = dbUser.LastName,
-                      Email = dbUser.Email
+                     Email = dbUser.Email
                 };
 
                 return userLoginResponseModel;
@@ -80,7 +80,8 @@ namespace Infrastructure.Services
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Salt = salt,
-                HashedPassword = hashedPassword
+                HashedPassword = hashedPassword,
+                DateOfBirth = model.DateOfBirth
             };
 
             var createdUser = await _userRepository.AddAsync(user);

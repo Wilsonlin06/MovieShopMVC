@@ -25,7 +25,19 @@ namespace Infrastructure.Services
             {
                 Id = movie.Id,
                 Title = movie.Title,
-                Rating = movie.Rating
+                Rating = movie.Rating,
+                Overview = movie.Overview,
+                Tagline = movie.Tagline,
+                Budget = movie.Budget,
+                Revenue = movie.Revenue,
+                ImdbUrl = movie.ImdbUrl,
+                TmdbUrl = movie.TmdbUrl,
+                PosterUrl = movie.PosterUrl,
+                BackdropUrl = movie.BackdropUrl,
+                OriginalLanguage = movie.OriginalLanguage,
+                ReleaseDate = movie.ReleaseDate,
+                RunTime = movie.RunTime,
+                Price = movie.Price
             };
 
             movieDetailsModel.Casts = new List<CastResponseModel>();
@@ -36,7 +48,7 @@ namespace Infrastructure.Services
                 {
                     Id = cast.CastId,
                     Name = cast.Cast.Name,
-                    Character = cast.Character
+                    Character = cast.Character                    
                 });
             }
 
@@ -44,7 +56,11 @@ namespace Infrastructure.Services
 
             foreach (var genre in movie.Genres)
             {
-                movieDetailsModel.Genres.Add(new GenreResponseModel { Id = genre.Id, Name = genre.Name });
+                movieDetailsModel.Genres.Add(new GenreResponseModel 
+                {
+                    Id = genre.Id,
+                    Name = genre.Name                    
+                });
             }
 
             return movieDetailsModel;
@@ -59,7 +75,12 @@ namespace Infrastructure.Services
 
             foreach (var movie in movies)
             {
-                movieCards.Add(new MovieCardResponseModel { Id = movie.Id, Title = movie.Title, PosterUrl = movie.PosterUrl });
+                movieCards.Add(new MovieCardResponseModel 
+                { 
+                    Id = movie.Id, 
+                    Title = movie.Title, 
+                    PosterUrl = movie.PosterUrl
+                });
             }
 
             return movieCards;

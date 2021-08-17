@@ -1,3 +1,48 @@
-﻿<h1>
+﻿@model List<ApplicationCore.Models.MovieDetailsResponseModel>
+
+@*<nav class="navbar navbar-dark bg-dark">
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="navbar-brand" href="#">MovieStore</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link text-light dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                GENRES
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">PRIVACY</a>
+        </li>
+        <li>
+            <form class="container-fluid justify-content-start">
+                <a asp-controller="Account" asp-action="Login">
+                    <button type="button" class="btn btn-outline-primary" style="border-radius:30%">LOGIN</button>
+                </a>
+            </form>
+        </li>
+    </ul>
+</nav>*@
+
+
+@*<h1>
     Movie Details
-</h1>
+</h1>*@
+
+<div class="rounded">
+    <div class="container-fluid bg-light">
+        <div class="row">
+            <img src=@Model[0].BackdropUrl />;
+            @*@foreach (var details in Model)
+            {
+                <div class="col-6 col-lg-3 col-sm-4 col-xl-2">
+                    @await Html.PartialAsync("Poster", details.BackdropUrl);
+                </div>
+            }*@
+        </div>
+    </div>
+</div>

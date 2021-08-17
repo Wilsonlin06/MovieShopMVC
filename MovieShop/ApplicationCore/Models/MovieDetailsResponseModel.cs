@@ -27,5 +27,6 @@ namespace ApplicationCore.Models
 
         public List<CastResponseModel> Casts { get; set; }
         public List<GenreResponseModel> Genres { get; set; }
+
     }
 }
