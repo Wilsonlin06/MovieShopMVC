@@ -154,3 +154,4 @@ E:\MovieShopMVC\MovieShop\MovieShopMVC\obj\Debug\net5.0\Razor\Views\Account\Regi
 E:\MovieShopMVC\MovieShop\MovieShopMVC\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 E:\MovieShopMVC\MovieShop\MovieShopMVC\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 E:\MovieShopMVC\MovieShop\MovieShopMVC\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
+E:\MovieShopMVC\MovieShop\MovieShopMVC\obj\Debug\net5.0\Razor\Views\Cast\details.cshtml.g.cs

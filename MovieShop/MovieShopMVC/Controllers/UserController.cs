@@ -12,9 +12,11 @@ namespace MovieShopMVC.Controllers
     public class UserController : Controller
     {
         private readonly ICurrentUserService _currentUserService;
-        public UserController(ICurrentUserService currentUserService)
+        private readonly IUserService _userService;
+        public UserController(ICurrentUserService currentUserService, IUserService userService)
         {
             _currentUserService = currentUserService;
+            _userService = userService;
         }
         // GET: /<controller>/
         // user/GetAllPurchases
@@ -24,13 +26,16 @@ namespace MovieShopMVC.Controllers
             var userId = _currentUserService.UserId;
             // id from the cookie and send that id to UserService to get all his/her movies.
             // Filters **Important interview question** 
-            return View();
+            var movieCards = await _userService.GetPurchasedMovies(userId);
+            return View(movieCards);
         }
 
         //[Authorize]
         public async Task<IActionResult> GetFavorites()
         {
-            return View();
+            var userId = _currentUserService.UserId;
+            var movieCards = await _userService.GetFavorites(userId);
+            return View(movieCards);
         }
 
         //[Authorize]

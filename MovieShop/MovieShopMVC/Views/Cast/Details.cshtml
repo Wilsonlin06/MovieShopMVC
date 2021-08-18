@@ -1,0 +1,30 @@
+﻿@model ApplicationCore.Models.CastResponseModel
+
+<div class="col-2 rounded mx-auto d-block">
+    <img src="@Model.ProfilePath" class="img-fluid" alt="@Model.Name" />
+</div>
+<div class="col-12 text-center">
+    <h1>@Model.Name</h1>
+    <span>
+        Gender:
+        @if (Model.Gender == "1")
+        {<span>Female</span>}
+        else
+        {<span>Male</span>}
+    </span>
+</div>
+
+<div class="card bg-transparent" style="width:800px; margin:0 auto;">
+    <div class="card-header bg-transparent text-center" style="font:bold; font-size:x-large">MOVIES</div>
+    @foreach (var movie in Model.Movies)
+    {
+            <ul class="list-group list-group-horizontal">
+                <li class="list-group-item col-2">
+                    <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">
+                        <img src="@movie.PosterUrl" class="img-fluid" alt="@movie.Title" />
+                    </a>
+                </li>
+                <li class="list-group-item col-10" style="font:bold; font-size:large">@movie.Title</li>
+            </ul>
+    }
+</div>

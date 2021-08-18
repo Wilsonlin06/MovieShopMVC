@@ -13,5 +13,7 @@ namespace ApplicationCore.Models
         public string Gender { get; set; }
         public string ProfilePath { get; set; }
         public string Character { get; set; }
+
+        public List<MovieDetailsResponseModel> Movies { get; set; }
     }
 }
