@@ -42,11 +42,14 @@ namespace MovieShopMVC
             services.AddScoped<ICastRepository, CastRepository>();
             services.AddScoped<IAsyncRepository<Genre>, EfRepository<Genre>>();
             services.AddScoped<IGenreService, GenreService>();
+            services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddMemoryCache();
             services.AddDbContext<MovieShopDbContext>
                 (
                 options=>options.UseSqlServer(Configuration.GetConnectionString("MovieShopDBConnection"))
                 );
+
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
@@ -63,8 +66,8 @@ namespace MovieShopMVC
         {
             if (env.IsDevelopment())
             {
-                //app.UseDeveloperExceptionPage();
-                app.UseMovieShopExceptionMiddleware(                        );
+                app.UseDeveloperExceptionPage();
+                //app.UseMovieShopExceptionMiddleware();
             }
             else
             {

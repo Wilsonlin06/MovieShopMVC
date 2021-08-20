@@ -10,5 +10,6 @@ namespace ApplicationCore.ServiceInterfaces
     public interface IGenreService
     {
         Task<IEnumerable<GenreResponseModel>> GetAllGenres();
+        Task<GenreResponseModel> GetGenreDetails(int id);
     }
 }

@@ -155,4 +155,6 @@ E:\MovieShopMVC\MovieShop\MovieShopMVC\bin\Debug\net5.0\Microsoft.AspNetCore.Cry
 E:\MovieShopMVC\MovieShop\MovieShopMVC\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 E:\MovieShopMVC\MovieShop\MovieShopMVC\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
 E:\MovieShopMVC\MovieShop\MovieShopMVC\obj\Debug\net5.0\Razor\Views\Cast\details.cshtml.g.cs
-E:\MovieShopMVC\MovieShop\MovieShopMVC\obj\Debug\net5.0\Razor\Views\Genres\Index.cshtml.g.cs
+E:\MovieShopMVC\MovieShop\MovieShopMVC\obj\Debug\net5.0\Razor\Views\User\Favorites.cshtml.g.cs
+E:\MovieShopMVC\MovieShop\MovieShopMVC\obj\Debug\net5.0\Razor\Views\User\Purchases.cshtml.g.cs
+E:\MovieShopMVC\MovieShop\MovieShopMVC\obj\Debug\net5.0\Razor\Views\Genres\Details.cshtml.g.cs

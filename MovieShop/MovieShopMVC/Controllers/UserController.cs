@@ -31,7 +31,7 @@ namespace MovieShopMVC.Controllers
         }
 
         //[Authorize]
-        public async Task<IActionResult> GetFavorites()
+        public async Task<IActionResult> Favorites()
         {
             var userId = _currentUserService.UserId;
             var movieCards = await _userService.GetFavorites(userId);
@@ -57,9 +57,9 @@ namespace MovieShopMVC.Controllers
         }
 
         //[Authorize]
-        public async Task<IActionResult> FavoriteMovie()
-        {
-            return View();
-        }
+        //public async Task<IActionResult> FavoriteMovie()
+        //{
+        //    return View();
+        //}
     }
 }
