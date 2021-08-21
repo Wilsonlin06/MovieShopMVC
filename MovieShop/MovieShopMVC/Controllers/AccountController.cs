@@ -84,8 +84,12 @@ namespace MovieShopMVC.Controllers
             // call the service and repository to hash the password with salt and save to DB
 
             var regisetredUser = await _userService.RegisterUser(model);
-            return RedirectToAction("Login");
-           
+            return RedirectToAction("Login");           
         }
+
+        //public async Task<IActionResult> Logout((object sender, EventArgs e)
+        //{
+        //    return RedirectToAction("Home/Index");
+        //}
     }
 }

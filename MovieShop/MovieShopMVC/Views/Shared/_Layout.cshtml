@@ -1,4 +1,5 @@
 ﻿@inject ApplicationCore.ServiceInterfaces.IGenreService _genreService
+@inject ApplicationCore.ServiceInterfaces.ICurrentUserService _currentUser
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,9 +9,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
+
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #e3f2fd;">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Movie Shop</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -19,12 +21,32 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        @{
+                            var userId = _currentUser.UserId;
+
+                            if (userId != 0)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-primary font-weight-bold"> Welcome back, @_currentUser.FullName! </a>
+                                </li>
+                            }
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        @{
+                            if (userId == 0)
+                            {
+                                <li>
+                                    <button typ="button" class="btn btn-outline-primary rounded-pill">
+                                        <a asp-controller="Account" asp-action="Login">Login</a>
+                                    </button>
+                                </li>
+                            }
+                        }
                     </ul>
                 </div>
                 <div class="dropdown bg-light">
@@ -36,7 +58,29 @@
                         {
                             <a class="dropdown-item" asp-controller="Genres" asp-action="Details" asp-route-id="@genre.Id">@genre.Name</a>
                         }
-
+                    </div>
+                </div>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                <div class="dropdown ml-2">
+                    <button class="btn btn-secondary bg-transparent" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-bars text-primary"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        @{
+                            if (userId == 0)
+                            {
+                                <a class="dropdown-item" asp-controller="Account" asp-action="Register">Register</a>
+                                <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-id="">Home</a>
+                                <a class="dropdown-item" asp-controller="Home" asp-action="Privacy" asp-route-id="">Privacy</a>
+                            }
+                            else
+                            {
+                                <a class="dropdown-item" asp-controller="User" asp-action="" asp-route-id=@userId>User Profile</a>
+                                <a class="dropdown-item" asp-controller="User" asp-action="Favorites" asp-route-id=@userId>Favorites</a>
+                                <a class="dropdown-item" asp-controller="User" asp-action="Purchases" asp-route-id=@userId>Purchases</a>
+                                <a class="dropdown-item" asp-controller="Account" asp-action="Logout" href="?action=logout">Logout</a>
+                            }
+                        }
                     </div>
                 </div>
             </div>
