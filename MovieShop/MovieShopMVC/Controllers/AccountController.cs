@@ -8,6 +8,7 @@ using ApplicationCore.ServiceInterfaces;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using System.Web;
 
 namespace MovieShopMVC.Controllers
 {
@@ -86,10 +87,17 @@ namespace MovieShopMVC.Controllers
             var regisetredUser = await _userService.RegisterUser(model);
             return RedirectToAction("Login");           
         }
-
-        //public async Task<IActionResult> Logout((object sender, EventArgs e)
-        //{
-        //    return RedirectToAction("Home/Index");
-        //}
+        public async Task<IActionResult> Logout(string returnUrl = null)
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            if (returnUrl != null)
+            {
+                return LocalRedirect(returnUrl);
+            }
+            else
+            {
+                return LocalRedirect("~/");
+            }
+        }
     }
 }

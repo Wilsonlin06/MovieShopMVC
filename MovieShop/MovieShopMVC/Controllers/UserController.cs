@@ -21,7 +21,7 @@ namespace MovieShopMVC.Controllers
         // GET: /<controller>/
         // user/GetAllPurchases
         //[Authorize]
-        public async Task<IActionResult> GetAllPurchases()
+        public async Task<IActionResult> Purchases()
         {
             var userId = _currentUserService.UserId;
             // id from the cookie and send that id to UserService to get all his/her movies.
@@ -39,9 +39,13 @@ namespace MovieShopMVC.Controllers
         }
 
         //[Authorize]
-        public async Task<IActionResult> GetProfile()
+        public async Task<IActionResult> Profile()
         {
-            return View();
+            var userId = _currentUserService.UserId;
+            // id from the cookie and send that id to UserService to get all his/her movies.
+            // Filters **Important interview question** 
+            var userProfile = await _userService.GetUserInfo(userId);
+            return View(userProfile);
         }
 
         //[Authorize]

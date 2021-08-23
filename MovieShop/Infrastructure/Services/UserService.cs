@@ -54,6 +54,19 @@ namespace Infrastructure.Services
             return movieCards;
         }
 
+        public async Task<UserRegisterResponseModel> GetUserInfo(int userId)
+        {
+            var user = await _userRepository.GetUserPurchaseById(userId);
+            var userProfile = new UserRegisterResponseModel
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName
+            };
+            return userProfile;
+        }
+
         public async Task<UserLoginResponseModel> Login(LoginRequestModel model)
         {
             var dbUser = await _userRepository.GetUserByEmail(model.Email);

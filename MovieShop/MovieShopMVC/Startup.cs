@@ -56,6 +56,7 @@ namespace MovieShopMVC
                     options.Cookie.Name = "MovieShopAuthCookie";
                     options.ExpireTimeSpan = TimeSpan.FromHours(2);
                     options.LoginPath = "/Account/Login";
+                    options.LogoutPath = "/Acount/Logout";
                 });
 
             services.AddHttpContextAccessor();

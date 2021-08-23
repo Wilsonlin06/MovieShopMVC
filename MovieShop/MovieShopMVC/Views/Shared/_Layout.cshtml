@@ -75,10 +75,10 @@
                             }
                             else
                             {
-                                <a class="dropdown-item" asp-controller="User" asp-action="" asp-route-id=@userId>User Profile</a>
+                                <a class="dropdown-item" asp-controller="User" asp-action="Profile" asp-route-id=@userId>User Profile</a>
                                 <a class="dropdown-item" asp-controller="User" asp-action="Favorites" asp-route-id=@userId>Favorites</a>
                                 <a class="dropdown-item" asp-controller="User" asp-action="Purchases" asp-route-id=@userId>Purchases</a>
-                                <a class="dropdown-item" asp-controller="Account" asp-action="Logout" href="?action=logout">Logout</a>
+                                <a class="dropdown-item" asp-controller="Account" asp-action="Logout">Logout</a>
                             }
                         }
                     </div>
