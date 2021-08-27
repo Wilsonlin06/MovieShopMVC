@@ -1,0 +1,55 @@
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3"
+    style="background-color: #e3f2fd;">
+    <div class="container">
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Movie Shop</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark">Privacy</a>
+                <li *ngIf="!isLoggedin">
+                    <a typ="button" class="btn btn-outline-primary rounded-pill" (click)="login()">
+                        Login
+                    </a>
+                </li>
+                <li *ngIf="isLoggedin" class="nav-item">
+                    <span class="nav-link text-primary font-weight-bold"> Welcome back
+                        <!--, {{getUserName()}}-->!
+                    </span>
+                </li>
+            </ul>
+        </div>
+        <div class="dropdown bg-light">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Genres
+            </button> 
+            <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            </div> -->
+        </div>
+        <tbody>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" *ngIf="isLoggedin" class="ml-3">
+                <a typ="button" class="btn btn-outline-secondary rounded-pill" (click)="logout()">Logout</a>
+            </div>
+            <!-- <td class="overflow-hidden">
+            <link rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            
+            <div ngbDropdown container="body">
+                <button class="btn btn-outline-primary btn-sm" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
+                    <i class="fa fa-bars text-primary"></i>                    
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" *ngIf="isLoggedin">
+                    <button ngbDropdownItem (click)="logout()">Logout</button>
+                </div>
+            </div> -->
+        </tbody>
+    </div>
+</nav>

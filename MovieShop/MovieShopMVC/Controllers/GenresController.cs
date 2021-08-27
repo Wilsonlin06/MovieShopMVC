@@ -21,14 +21,6 @@ namespace MovieShopMVC.Controllers
             // Use <a> with name of genre and when clicked go to database and show list of movies belong to that genre
             var genreDetails = await _genreService.GetGenreDetails(id);
             return View(genreDetails);
-
-            //var genres = await _genreService.GetAllGenres();
-            //foreach (var genre in genres)
-            //{
-            //    if (genre.Id == id)
-            //        return View(genre);
-            //}
-            //return NotFound("Genre not found");
         }
     }
 }

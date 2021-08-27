@@ -20,7 +20,7 @@ namespace MovieShopAPI.Controllers
         }
 
         [HttpGet]
-        [Route("Index")]
+        [Route("List")]
         public async Task<IActionResult> GetGenres()
         {
             var genres = await _genreService.GetAllGenres();

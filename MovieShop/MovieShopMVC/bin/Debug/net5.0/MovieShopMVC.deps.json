@@ -34,6 +34,7 @@
       "MovieShopMVC/1.0.0": {
         "dependencies": {
           "ApplicationCore": "1.0.0",
+          "FontAwesome": "4.7.0",
           "Infrastructure": "1.0.0",
           "Microsoft.EntityFrameworkCore.Design": "5.0.9",
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.9",
@@ -326,6 +327,7 @@
           "MovieShopMVC.dll": {}
         }
       },
+      "FontAwesome/4.7.0": {},
       "Humanizer.Core/2.8.26": {
         "runtime": {
           "lib/netstandard2.0/Humanizer.dll": {
@@ -3563,6 +3565,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "FontAwesome/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-n4H/brfszElyoZ4kmGh8E75uqvLzLvFr3h2PFVdPH1LwUmWIpeqdaW2pcC4oZAhg7sESyObh0IZpAI8COCNeUg==",
+      "path": "fontawesome/4.7.0",
+      "hashPath": "fontawesome.4.7.0.nupkg.sha512"
     },
     "Humanizer.Core/2.8.26": {
       "type": "package",

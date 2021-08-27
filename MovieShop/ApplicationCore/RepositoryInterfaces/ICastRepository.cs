@@ -9,8 +9,6 @@ namespace ApplicationCore.RepositoryInterfaces
 {
     public interface ICastRepository : IAsyncRepository<Cast>
     {
-        public interface ICastRepository : IAsyncRepository<Cast>
-        {
-        }
+
     }
 }

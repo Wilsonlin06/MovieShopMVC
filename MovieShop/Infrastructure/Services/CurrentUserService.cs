@@ -19,7 +19,7 @@ namespace Infrastructure.Services
         public int UserId =>
             Convert.ToInt32(_httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-        public bool IsAuthenticated { get; }
+        public bool IsAuthenticated => _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated; //{ get; }
         public string Email => _httpContextAccessor.HttpContext?.User?.Claims
             .FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
@@ -27,8 +27,8 @@ namespace Infrastructure.Services
                                       .FirstOrDefault(c => c.Type == ClaimTypes.GivenName)?.Value + " " +
                                   _httpContextAccessor.HttpContext?.User.Claims
                                       .FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value;
-        public bool IsAdmin { get; }
-        public bool IsSuperAdmin { get; }
-        public IEnumerable<string> Roles { get; }
+        public bool IsAdmin => _httpContextAccessor.HttpContext.User.IsInRole("Admin");
+        public bool IsSuperAdmin => _httpContextAccessor.HttpContext.User.IsInRole("SuperAdmin");
+        public IEnumerable<string> Roles => new List<string> { "User", "Admin", "SuperAdmin" };
     }
 }

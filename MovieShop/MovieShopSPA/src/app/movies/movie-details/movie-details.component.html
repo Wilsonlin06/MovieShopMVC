@@ -1,0 +1,149 @@
+    <head>
+        <script src="https://kit.fontawesome.com/11efe461a5.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="bg-image" style="background-image:url({{movie.backdropUrl}}); align-content:center; background-size:120%">
+            <div class="mask" style="background-color: rgba(0, 0, 0, 0.8);">
+                <div class="row">
+                    <div class="col-md-3 offset-2 mr-5 pr-5">
+                        <div>
+                            <img src={{movie.posterUrl}} class="card-img-top" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 ml-5 pl-5">
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <h1 class="text-white">
+                                    {{movie.title}}
+                                </h1>
+                                <small class="text-muted">{{movie.tagline}}</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4 text-secondary font-weight-bold mt-2">
+                                {{movie.runTime}} m | {{movie.releaseDate | date:'yyyy'}}
+                            </div>
+                            <div class="col-8">
+                                <span *ngFor="let genre of movie.genres">                                
+                                    <a class="badge badge-pill badge-dark ml-1" >{{genre.name}}</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4 mt-3">
+                                <h4>
+                                    <span class="badge badge-warning">
+                                        {{movie.rating | number: '1.1-2'}}
+                                    </span>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 text-light mt-2">
+                                {{movie.overview}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mt-4 offset-1 bg-transparent ml-1">
+                        <ul class="list-group">
+                            <li class="list-group-item bg-transparent">
+
+
+                            </li>
+                            <li class="list-group-item bg-transparent">
+                                <button type="button"
+                                        class="btn btn-outline-light btn-lg btn-block btn-sm">
+                                    <i class="far fa-edit mr-1"></i>
+                                    REVIEW
+                                </button>
+                            </li>
+                            <li class="list-group-item bg-transparent">
+                                <button type="button"
+                                        class="btn btn-outline-light btn-lg btn-block btn-sm">
+                                    <i class="fas fa-play mr-1"></i> TRAILER
+                                </button>
+                            </li>
+
+                            <li class="list-group-item bg-transparent">
+                                <a class="btn btn-light btn-lg btn-block btn-sm" >
+                                    BUY {{movie.price}}
+                                </a>
+
+                                <a class="btn btn-light btn-lg btn-block btn-sm" >
+                                    WATCH MOVIE
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <div class="row mt-4">
+            <div class="col-4 moviefacts bg-light">
+                <h5>MOVIE FACTS</h5>
+                <hr>
+                <ul class="list-group list-group-flush bg-light">
+                    <li class="list-group-item bg-light">
+                        <i class="fas fa-calendar-alt mr-2"></i>Release Date
+                        <span class="badge badge-pill badge-dark">{{movie.releaseDate | date:'M/dd/yyyy'}}</span>
+                    </li>
+
+                    <li class="list-group-item bg-light">
+                        <i class="fas fa-hourglass-half mr-2"></i>Run Time
+                        <span class="badge badge-pill badge-dark">{{movie.runTime}} m</span>
+                    </li>
+                    <li class="list-group-item bg-light">
+                        <i class="fas fa-money-bill-alt"></i> Box Office
+                        <span class="badge badge-pill badge-pill badge-dark">
+                            {{movie.revenue | currency:'USD':'symbol':'7.0'}}
+                        </span>
+                    </li>
+
+                    <li class="list-group-item bg-light">
+                        <i class="fas fa-dollar-sign mr-2"></i> Budget
+                        <span class="badge badge-pill badge-dark">
+                            {{movie.budget | currency:'USD':'symbol':'7.0'}}
+                        </span>
+                    </li>
+
+                    <li class="list-group-item bg-light">
+                        <i class="fab fa-imdb"></i>
+
+                        <a href={{movie.imdbUrl}}
+                           class="text-dark ml-3"
+                           target="_blank">
+                            <i class="fas fa-share-square mr-2"></i>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-7">
+                <div class="card" style="border: hidden">
+                    <div class="card-header bg-transparent" style="font:bold; font-size:xx-large">
+                        CAST
+                    </div>
+                    <span *ngFor="let cast of movie.casts">
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item col-1" style="border-left: hidden; border-right: hidden;">
+                                <a >
+                                    <img src={{cast.profilePath}}
+                                         class="cast-small-img rounded-circle"
+                                         alt={{cast.name}}
+                                         height="60" />
+                                </a>
+                            </li>
+                            <li class="list-group-item col-4" style="border-left: hidden; border-right: hidden;">
+                                {{cast.name}}
+                            </li>
+                            <li class="list-group-item col-7" style="border-left: hidden; border-right: hidden;">
+                                {{cast.character}}
+                            </li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </body>

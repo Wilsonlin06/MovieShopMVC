@@ -1,0 +1,19 @@
+<div class="container">
+
+    <div *ngIf="invalidLogin" class="alert alert-danger">
+        Invalid email/password, try again.
+    </div>
+    <form (ngSubmit)="loginSubmit()" #loginForm="ngForm">
+        <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="login.email" aria-describedby="emailHelp">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" [(ngModel)]="login.password">
+        </div>
+        
+        <input class="btn btn-primary" type="submit" value="Login" />
+    </form>
+</div>

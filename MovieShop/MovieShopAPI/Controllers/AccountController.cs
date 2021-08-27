@@ -7,8 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using Microsoft.Extensions.Configuration;
+using System.Text;
 
 namespace MovieShopAPI.Controllers
 {
@@ -17,16 +21,22 @@ namespace MovieShopAPI.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly ICurrentUserService _currentUserService;
+        private readonly IConfiguration _configuration;
 
-        public AccountController(IUserService userService, ICurrentUserService currentUserService)
+        public AccountController(IUserService userService, IConfiguration configuration)
         {
             _userService = userService;
-            _currentUserService = currentUserService;
+            _configuration = configuration;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Register()
+        {
+            var user = await _userService.GetAllUsers();
+            return Ok(user);
         }
 
         [HttpPost]
-        [Route("Register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterRequestModel model)
         {
             var user = await _userService.RegisterUser(model);
@@ -37,12 +47,6 @@ namespace MovieShopAPI.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login(LoginRequestModel model)
         {
-
-            if (!ModelState.IsValid)
-            {
-                return NotFound("No User Found");
-            }
-
             var user = await _userService.Login(model);
 
             if (user == null)
@@ -50,30 +54,64 @@ namespace MovieShopAPI.Controllers
                 throw new Exception("Invalid Login");
             }
 
-            // Cookies based authentication....
+            return Ok(
+                new
+                {
+                    token = GenerateJWT(user)
+                });
+
+        }
+
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<IActionResult> LoginAsync(int id)
+        {
+            var user = await _userService.GetUserInfo(id);
+            return Ok(user);
+        }
+
+        private string GenerateJWT(UserLoginResponseModel user)
+        {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.GivenName, user.FirstName),
                 new Claim(ClaimTypes.Surname, user.LastName),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                new Claim(ClaimTypes.Email, user.Email)
             };
 
-            // Identity class... and Principle
-            // go to a bar => check your identity => Driving Licence
-            // go to Airport => check your passport
-            // Create a movie => claim with role value as admin
+            var identityClaims = new ClaimsIdentity();
+            identityClaims.AddClaims(claims);
 
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            // Create JWT
 
-            // create the cookie
-            // HttpContext
+            // get the secret key from appsettings for Azure Key/Vault
 
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSecretKey"]));
+            // select the hashing algo
 
-            return Ok(user);
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
 
+            // get the expiration time
+            var expires = DateTime.UtcNow.AddHours(_configuration.GetValue<int>("ExpirationHours"));
+
+            //create the JWT token with above claims and credentials and expiration time
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Issuer = _configuration["Issuer"],
+                Audience = _configuration["Audience"],
+                Subject = identityClaims,
+                Expires = expires,
+                SigningCredentials = credentials
+            };
+
+            var encodedJWT = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(encodedJWT);
+            // Store Application Secrets in Azure Key/Vault
         }
     }
 }

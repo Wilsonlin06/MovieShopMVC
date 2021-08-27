@@ -16,13 +16,61 @@ namespace Infrastructure.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        //private readonly IAsyncRepository<Favorite> _favoriteRepository;
 
         public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
+            //_favoriteRepository = favoriteRepository;
         }
 
-        public async Task<IEnumerable<MovieCardResponseModel>> GetFavorites(int userId)
+        public async Task<List<UserRegisterRequestModel>> GetAllUsers()
+        {
+            var users = await _userRepository.ListAsync(m => m.Id < 1000);
+            var userList = new List<UserRegisterRequestModel>();
+            foreach (var user in users)
+            {
+                userList.Add(new UserRegisterRequestModel
+                {
+                    DateOfBirth = (DateTime)user.DateOfBirth,
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName
+                });
+            }
+            return userList;
+        }
+
+        public async Task<MovieDetailsResponseModel> GetFavorite(int userId, int movieId)
+        {
+            var dbUser = await _userRepository.GetUserFavoriteById(userId);
+            var movieDetails = new MovieDetailsResponseModel { };
+
+            foreach (var fav in dbUser.Favorites)
+            {
+                if (fav.MovieId == movieId)
+                {
+                    movieDetails.Id = fav.Movie.Id;
+                    movieDetails.Title = fav.Movie.Title;
+                    movieDetails.Overview = fav.Movie.Overview;
+                    movieDetails.Tagline = fav.Movie.Tagline;
+                    movieDetails.Budget = fav.Movie.Budget;
+                    movieDetails.Revenue = fav.Movie.Revenue;
+                    movieDetails.ImdbUrl = fav.Movie.ImdbUrl;
+                    movieDetails.TmdbUrl = fav.Movie.TmdbUrl;
+                    movieDetails.PosterUrl = fav.Movie.PosterUrl;
+                    movieDetails.BackdropUrl = fav.Movie.BackdropUrl;
+                    movieDetails.OriginalLanguage = fav.Movie.OriginalLanguage;
+                    movieDetails.ReleaseDate = fav.Movie.ReleaseDate;
+                    movieDetails.RunTime = fav.Movie.RunTime;
+                    movieDetails.Price = fav.Movie.Price;
+                    movieDetails.Rating = fav.Movie.Rating;
+                    break;
+                }
+            }
+            return movieDetails;
+        }
+        public async Task<IEnumerable<MovieCardResponseModel>> GetAllFavorites(int userId)
         {
             var dbUser = await _userRepository.GetUserFavoriteById(userId);
             var movieCards = new List<MovieCardResponseModel>();
@@ -143,6 +191,75 @@ namespace Infrastructure.Services
 
         }
 
+        public async Task<FavoriteRequestModel> SetFavorite(FavoriteRequestModel model)
+        {
+            var favorite = new Favorite
+            {
+                UserId = model.UserId,
+                MovieId = model.MovieId
+            };
+            var favorites = await _userRepository.AddAsync(favorite);
+            return model;
+        }
+
+        public async Task<FavoriteRequestModel> UnFavorite(FavoriteRequestModel model)
+        {
+            //var fav = await _favoriteRepository.ListAsync(u => u.UserId == model.UserId && u.MovieId == model.MovieId);
+            //await _favoriteRepository.DeleteAsync(fav.First());
+            var fav = await _userRepository.GetUserFavoriteById(model.UserId);
+            var favModel = new Favorite { };
+            foreach (var f in fav.Favorites)
+            {
+                if (f.MovieId == model.MovieId)
+                {
+                    favModel.Id = f.Id;
+                    favModel.UserId = model.UserId;
+                    favModel.MovieId = model.MovieId;
+                    favModel.Movie = f.Movie;
+                    favModel.User = f.User;
+                    break;
+                }
+            }
+            //var favorite = new Favorite
+            //{
+            //    Id = favModel.Id,
+            //    UserId = favModel.UserId,
+            //    MovieId = favModel.MovieId
+            //};
+            var favorites = await _userRepository.Remove(favModel);
+            return model;
+        }
+
+        public async Task<Review> UpdateReview(ReviewRequestModel model)
+        {
+            var existReview = await _userRepository.getReviewByIdAsync(model.movieId, model.userId);
+            if (existReview == null)
+            {
+                return null;
+            }
+            var review = new Review
+            {
+                UserId = model.userId,
+                MovieId = model.movieId,
+                ReviewText = model.reviewText,
+                Rating = model.Rating
+            };
+            await _userRepository.UpdateAsync(review);
+            return review;
+        }
+
+        public async Task<ReviewRequestModel> AddReview(ReviewRequestModel model)
+        {
+            var review = new Review
+            {
+                MovieId = model.movieId,
+                UserId = model.userId,
+                Rating = model.Rating,
+                ReviewText = model.reviewText
+            };
+            await _userRepository.AddAsync(review);
+            return model;
+        }
 
         private string GenerateSalt()
         {

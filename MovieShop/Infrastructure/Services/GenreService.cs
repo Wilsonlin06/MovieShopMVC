@@ -2,6 +2,7 @@
 using ApplicationCore.Models;
 using ApplicationCore.RepositoryInterfaces;
 using ApplicationCore.ServiceInterfaces;
+using Infrastructure.Repositories;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,13 @@ namespace Infrastructure.Services
     {
         private readonly IAsyncRepository<Genre> _genreRepository;
         private readonly IMemoryCache _memoryCache;
+        private readonly IMovieService _movieService;
         // Caching...
-        public GenreService(IAsyncRepository<Genre> genreRepository, IMemoryCache memoryCache)
+        public GenreService(IAsyncRepository<Genre> genreRepository, IMemoryCache memoryCache, IMovieService movieService)
         {
             _genreRepository = genreRepository;
             _memoryCache = memoryCache;
+            _movieService = movieService;
         }
 
         public async Task<IEnumerable<GenreResponseModel>> GetAllGenres()
@@ -38,40 +41,40 @@ namespace Infrastructure.Services
 
             foreach (var genre in genres)
             {
-                genresModel.Add(new GenreResponseModel { Id = genre.Id, Name = genre.Name });
+                genresModel.Add(new GenreResponseModel 
+                {
+                    Id = genre.Id,
+                    Name = genre.Name 
+                });
             }
             return genresModel;
         }
 
         public async Task<GenreResponseModel> GetGenreDetails(int id)
         {
-            var genre = await _genreRepository.GetByIdAsync(id);
-            var genreDetailsModel = new GenreResponseModel
+            var topMovies = await _movieService.GetTopRevenueMovies();
+            var genreMovies = new GenreResponseModel();
+            var genreDetails = await _genreRepository.GetByIdAsync(id);
+            genreMovies.movies = new List<MovieCardResponseModel>();
+            foreach (var movie in topMovies)
             {
-                Id = genre.Id,
-                Name = genre.Name
-            };
-
-            //genreDetailsModel.Movies = new List<MovieDetailsResponseModel>();
-
-            //foreach (var movie in genre.Movies)
-            //{
-            //    genreDetailsModel.Movies.Add(new MovieDetailsResponseModel
-            //    {
-            //        Id = movie.Id,
-            //        Title = movie.Title,
-            //        Rating = movie.Rating,
-            //        PosterUrl = movie.PosterUrl,
-            //        ReleaseDate = movie.ReleaseDate,
-            //        RunTime = movie.RunTime,
-            //        Tagline = movie.Tagline,
-            //        Overview = movie.Overview,
-            //        Price = movie.Price,
-            //        Budget = movie.Budget,
-            //        Revenue = movie.Revenue
-            //    });
-            //}
-            return genreDetailsModel;
+                var movieDetails = await _movieService.GetMovieDetails(movie.Id);
+                foreach (var genre in movieDetails.Genres)
+                {
+                    if (genre.Id == id)
+                    {
+                        genreMovies.Id = id;
+                        genreMovies.Name = genreDetails.Name;
+                        genreMovies.movies.Add(new MovieCardResponseModel
+                        {
+                            Id = movie.Id,
+                            Title = movie.Title,
+                            PosterUrl = movie.PosterUrl
+                        });
+                    }
+                }
+            }
+            return genreMovies;
         }
     }
 }

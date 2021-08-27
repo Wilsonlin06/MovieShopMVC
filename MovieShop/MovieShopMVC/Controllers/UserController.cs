@@ -1,4 +1,5 @@
-﻿using ApplicationCore.ServiceInterfaces;
+﻿using ApplicationCore.Entities;
+using ApplicationCore.ServiceInterfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -34,7 +35,7 @@ namespace MovieShopMVC.Controllers
         public async Task<IActionResult> Favorites()
         {
             var userId = _currentUserService.UserId;
-            var movieCards = await _userService.GetFavorites(userId);
+            var movieCards = await _userService.GetAllFavorites(userId);
             return View(movieCards);
         }
 
@@ -49,15 +50,15 @@ namespace MovieShopMVC.Controllers
         }
 
         //[Authorize]
-        public async Task<IActionResult> EditProfile()
+        public Task<IActionResult> EditProfile()
         {
-            return View();
+            throw new NotImplementedException();
         }
 
         //[Authorize]
-        public async Task<IActionResult> BuyMovie()
+        public Task<IActionResult> BuyMovie()
         {
-            return View();
+            throw new NotImplementedException();
         }
 
         //[Authorize]

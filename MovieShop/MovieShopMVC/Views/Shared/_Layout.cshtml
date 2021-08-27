@@ -21,16 +21,6 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @{
-                            var userId = _currentUser.UserId;
-
-                            if (userId != 0)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-primary font-weight-bold"> Welcome back, @_currentUser.FullName! </a>
-                                </li>
-                            }
-                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
@@ -38,12 +28,19 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         @{
-                            if (userId == 0)
+                            var userId = _currentUser.UserId;
+                            if (_currentUser.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <span class="nav-link text-primary font-weight-bold"> Welcome back, @_currentUser.FullName! </span>
+                                </li>
+                            }
+                            else
                             {
                                 <li>
-                                    <button typ="button" class="btn btn-outline-primary rounded-pill">
-                                        <a asp-controller="Account" asp-action="Login">Login</a>
-                                    </button>
+                                    <a typ="button" class="btn btn-outline-primary rounded-pill" asp-controller="Account" asp-action="Login">
+                                        Login
+                                    </a>
                                 </li>
                             }
                         }
@@ -67,7 +64,7 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         @{
-                            if (userId == 0)
+                            if (!_currentUser.IsAuthenticated)
                             {
                                 <a class="dropdown-item" asp-controller="Account" asp-action="Register">Register</a>
                                 <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-id="">Home</a>

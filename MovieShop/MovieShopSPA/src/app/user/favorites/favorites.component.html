@@ -1,0 +1,15 @@
+<div class="h1 text-center alert alert-primary">
+    <header>
+        Favorites
+    </header>
+</div>
+<div class="rounded">
+    <div class="container-fluid bg-light">
+        <div class="row">
+            <div class="col-6 col-lg-3 col-sm-4 col-xl-2" *ngFor="let movie of movies">
+                <!-- Call child component and pass the movie-card object through the [input] property -->
+                <app-movie-card [movie]="movie"></app-movie-card>
+            </div>
+        </div>
+    </div>
+</div>

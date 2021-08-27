@@ -12,5 +12,10 @@ namespace ApplicationCore.RepositoryInterfaces
         Task<User> GetUserByEmail(string email);
         Task<User> GetUserPurchaseById(int id);
         Task<User> GetUserFavoriteById(int id);
+        Task<Favorite> AddAsync(Favorite favorite);
+        Task<Favorite> Remove(Favorite favorite);
+        Task AddAsync(Review review);
+        Task<Review> getReviewByIdAsync(int movieId, int userId);
+        Task UpdateAsync(Review review);
     }
 }

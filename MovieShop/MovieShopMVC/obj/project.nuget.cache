@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "V4ai6OkE9Pk60SjJJ3jhKRV5ExiYg6sjUvtYFuBvilG4bRYvOvLovTGzHlKOVw+Zhmu9I6ThJRs+rPZedFfXJA==",
+  "dgSpecHash": "GKT9eHDgvTgL6XAH7ejkU9eMbEzSzfcKSt9bk8rKJvW3v5OTS8QXbEZ+Z+g2ZTJ74wgcjAE7H4Vjzqjs/YKkzw==",
   "success": true,
   "projectFilePath": "E:\\MovieShopMVC\\MovieShop\\MovieShopMVC\\MovieShopMVC.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\New User\\.nuget\\packages\\fontawesome\\4.7.0\\fontawesome.4.7.0.nupkg.sha512",
     "C:\\Users\\New User\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\New User\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.9\\microsoft.aspnetcore.cryptography.internal.5.0.9.nupkg.sha512",
     "C:\\Users\\New User\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\5.0.9\\microsoft.aspnetcore.cryptography.keyderivation.5.0.9.nupkg.sha512",

@@ -24,9 +24,10 @@ namespace Infrastructure.Repositories
           return entity;
         }
 
-        public Task<T> DeleteAsync(T entity)
+        public async Task DeleteAsync(T entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Set<T>().Remove(entity);
+            await _dbContext.SaveChangesAsync();
         }
 
         public virtual async Task<T> GetByIdAsync(int Id)

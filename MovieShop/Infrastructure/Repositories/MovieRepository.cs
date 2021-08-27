@@ -17,6 +17,24 @@ namespace Infrastructure.Repositories
         {
 
         }
+
+        public async Task<IEnumerable<Movie>> Get30HighestRatedMovies()
+        {
+            var movies = await _dbContext.Reviews.Include(m => m.Movie)
+                                                 .GroupBy(r => new { id = r.MovieId, r.Movie.PosterUrl, r.Movie.Title, r.Movie.ReleaseDate })
+                                                 .OrderByDescending(g => g.Average(m => m.Rating))
+                                                 .Select(m => new Movie
+                                                 {
+                                                     Id = m.Key.id,
+                                                     PosterUrl = m.Key.PosterUrl,
+                                                     Title = m.Key.Title,
+                                                     ReleaseDate = m.Key.ReleaseDate
+
+                                                 }).Take(30).ToListAsync();
+
+            return movies;
+        }
+
         public async Task<IEnumerable<Movie>> Get30HighestRevenueMovies()
         {
             // get 30 movies from movie table order by revenue
@@ -50,5 +68,22 @@ namespace Infrastructure.Repositories
             return movie;
         }
 
+        public async Task<IEnumerable<Genre>> GetMoviesByGenreId(int genreId)
+        {
+            var movies = await _dbContext.Genres.Include(t => t.Movies).Where(g => g.Id == genreId).ToListAsync();
+            return movies;
+        }
+
+        public async Task<IEnumerable<Movie>> GetMovies()
+        {
+            var movies = await _dbContext.Movies.ToListAsync();
+            return movies;
+        }
+
+        public async Task<List<Review>> GetReviewByMovieId(int movieId)
+        {
+            var reviews = await _dbContext.Reviews.Where(r => r.MovieId == movieId).ToListAsync();
+            return reviews;
+        }
     }
 }

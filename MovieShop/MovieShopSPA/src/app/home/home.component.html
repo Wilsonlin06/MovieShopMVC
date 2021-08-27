@@ -1,0 +1,25 @@
+<!-- Pass the data from parent HomeComponent to child component MovieCard -->
+<!-- @Input -->
+<!-- Emit event from Child to parent @Output -->
+
+<div class="rounded">
+    <div class="container-fluid bg-light">
+        <div class="row">
+            <div class="col-6 col-lg-3 col-sm-4 col-xl-2" *ngFor="let movie of movies">
+                <!-- Call child component and pass the movie-card object through the [input] property -->
+                <app-movie-card [movie]="movie"></app-movie-card>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Directives -->
+<!-- Special attributes in angular that will give additional functionality to HTML -->
+<!-- Built-in directives -->
+<!-- ngFor, ngIf, ngSwitch -->
+
+<!-- <input type="text" class="form-control-file" name="" id="" placeholder="" abc>  Custom director -->
+
+<!-- 
+    directive abc { cssbackground = back}
+ -->

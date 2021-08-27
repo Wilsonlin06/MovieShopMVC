@@ -16,6 +16,25 @@ namespace Infrastructure.Repositories
         {
         }
 
+        public async Task<Favorite> AddAsync(Favorite favorite)
+        {
+            await _dbContext.AddAsync<Favorite>(favorite);
+            var entity = await _dbContext.SaveChangesAsync();
+            return favorite;
+        }
+
+        public async Task AddAsync(Review review)
+        {
+            await _dbContext.AddAsync<Review>(review);
+            var entity = await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<Review> getReviewByIdAsync(int movieId, int userId)
+        {
+            var reviewDetails = await _dbContext.FindAsync<Review>(movieId, userId);
+            return reviewDetails;
+        }
+
         public async Task<User> GetUserByEmail(string email)
         {
             var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
@@ -34,6 +53,19 @@ namespace Infrastructure.Repositories
             var pur = await _dbContext.Users.Include(u => u.Purchases).ThenInclude(u => u.Movie)
                 .FirstOrDefaultAsync(u => u.Id == id);
             return pur;
+        }
+
+        public async Task<Favorite> Remove(Favorite favorite)
+        {
+            _dbContext.Set<Favorite>().Remove(favorite);
+            var entity = await _dbContext.SaveChangesAsync();
+            return favorite;
+        }
+
+        public async Task UpdateAsync(Review review)
+        {
+            _dbContext.Set<Review>().Update(review);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

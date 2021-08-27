@@ -12,9 +12,9 @@
 //{
 //    public class GenreRepository : EfRepository<Genre>, IGenreRepository
 //    {
-//        public GenreRepository(MovieShopDbContext dbContext): base(dbContext)
+//        public GenreRepository(MovieShopDbContext dbContext) : base(dbContext)
 //        {
-            
+
 //        }
 
 //        public override async Task<Genre> GetByIdAsync(int id)

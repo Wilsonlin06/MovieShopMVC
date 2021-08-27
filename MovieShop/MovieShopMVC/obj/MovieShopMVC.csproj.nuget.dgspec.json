@@ -173,6 +173,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "FontAwesome": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
